@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>ajouter nature view</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]='naureViewForm'>
+
+    <ion-list>
+      <ion-item>
+        <ion-label floating>
+          Nom
+        </ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>
+          date
+        </ion-label>
+        <ion-datetime displayFormats="D/MM/YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          Description
+        </ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+
+
+      <button ion-button full [disabled]="naureViewForm.invalid" (click)="onSubmitform()">Enregistrer</button>
+
+    </ion-list>
+  </form>
+</ion-content>

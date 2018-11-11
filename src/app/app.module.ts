@@ -6,11 +6,19 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { SingleViewPage } from '../pages/single-view/single-view';
+import { NewViewPage } from '../pages/new-view/new-view';
+import { SetCoordinatesPage } from '../pages/set-coordinates/set-coordinates';
+import { NatureViewService } from '../services/natureview.service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SingleViewPage,
+    NewViewPage,
+    SetCoordinatesPage
+    
   ],
   imports: [
     BrowserModule,
@@ -19,11 +27,15 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SingleViewPage,
+    NewViewPage,
+    SetCoordinatesPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    NatureViewService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
