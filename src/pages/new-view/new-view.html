@@ -32,7 +32,19 @@
       </ion-item>
 
 
-      <button ion-button full [disabled]="naureViewForm.invalid" (click)="onSubmitform()">Enregistrer</button>
+      <ion-list>
+        <ion-item *ngIf="imageUrl">
+          <img [src]="imageUrl" style="max-width:100%" alt="">
+        </ion-item>
+      </ion-list>
+      <div text-center>
+
+        <button ion-button round large icon-only (click)="onTakePhoto()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </div>
+
+      <button ion-button full [disabled]="naureViewForm.invalid || !imageUrl" (click)="onSubmitform()">Enregistrer</button>
 
     </ion-list>
   </form>

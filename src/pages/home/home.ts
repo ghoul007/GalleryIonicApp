@@ -4,6 +4,7 @@ import { NatureView } from '../../models/NatureView.model';
 import { NatureViewService } from '../../services/natureview.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NewViewPage } from '../new-view/new-view';
+import { SingleViewPage } from '../single-view/single-view';
 
 @Component({
   selector: 'page-home',
@@ -26,6 +27,12 @@ export class HomePage implements OnInit, OnDestroy {
       })
     this.natureViewService.emitList();
   }
+
+
+  onLoadNatureView(view: NatureView) {
+    this.navCtrl.push(SingleViewPage, { natureview: view })
+  }
+
 
   ngOnDestroy() {
     this.natureViewSubscription.unsubscribe()

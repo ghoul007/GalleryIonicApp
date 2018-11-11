@@ -10,7 +10,7 @@ import { SingleViewPage } from '../pages/single-view/single-view';
 import { NewViewPage } from '../pages/new-view/new-view';
 import { SetCoordinatesPage } from '../pages/set-coordinates/set-coordinates';
 import { NatureViewService } from '../services/natureview.service';
-
+import { Camera } from '@ionic-native/camera'
 @NgModule({
   declarations: [
     MyApp,
@@ -18,7 +18,7 @@ import { NatureViewService } from '../services/natureview.service';
     SingleViewPage,
     NewViewPage,
     SetCoordinatesPage
-    
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +36,8 @@ import { NatureViewService } from '../services/natureview.service';
     StatusBar,
     SplashScreen,
     NatureViewService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Camera,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }
