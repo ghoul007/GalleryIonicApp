@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, normalizeURL } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
+import { File, Entry } from '@ionic-native/file';
 import { NatureViewService } from '../../services/natureview.service';
 import { NatureView } from '../../models/NatureView.model';
+
+declare var cordova: any;
 
 @IonicPage()
 @Component({
@@ -21,6 +24,7 @@ export class NewViewPage implements OnInit {
     private formBuilder: FormBuilder,
     private natureviewService: NatureViewService,
     private camera: Camera,
+    private file: File,
     private toast: ToastController,
     public navParams: NavParams) {
   }
@@ -28,7 +32,6 @@ export class NewViewPage implements OnInit {
   ngOnInit() {
     this.initForm();
   }
-
 
   initForm() {
     this.naureViewForm = this.formBuilder.group({
@@ -38,9 +41,7 @@ export class NewViewPage implements OnInit {
     })
   }
 
-
   onTakePhoto() {
-
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
@@ -48,9 +49,21 @@ export class NewViewPage implements OnInit {
       correctOrientation: true
     }).then((data) => {
       if (data) {
-        this.imageUrl = normalizeURL(data);
+
+        const path = data.replace(/[^\/]*$/, '');
+        const filename = data.replace(/^.*[\\\/]/, '');
+        const targetDirectory = cordova.file.dataDirectory;
+
+        this.file.moveFile(path, filename, targetDirectory, filename + new Date().getTime()).then(
+          (data: Entry) => {
+            this.imageUrl = normalizeURL(data.nativeURL);
+            this.camera.cleanup();
+          }
+        )
+        // this.imageUrl = normalizeURL(data);
       }
     }).catch((error) => {
+      this.camera.cleanup();
       this.toast.create({
         message: error,
         duration: 3000,
@@ -63,7 +76,7 @@ export class NewViewPage implements OnInit {
   onSubmitform() {
     let newView = new NatureView(
       this.naureViewForm.get('name').value,
-      new Data(),
+      new Date(),
       this.naureViewForm.get('description').value,
       0,
       0,
